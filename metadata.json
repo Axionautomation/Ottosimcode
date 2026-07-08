@@ -1,0 +1,6 @@
+{
+  "name": "OTTO_SIM",
+  "description": "An immersive, cyberpunk-brutalist isometric city simulation and venture management ecosystem with procedural AI strategic advice.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

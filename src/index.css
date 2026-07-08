@@ -1,0 +1,221 @@
+@import "tailwindcss";
+
+@theme {
+  --font-headline: "Space Grotesk", sans-serif;
+  --font-body: "Public Sans", sans-serif;
+  --font-label: "Work Sans", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --color-primary: #fbd12d;
+  --color-primary-container: #dfb803;
+  --color-secondary: #00fdc1;
+  --color-tertiary: #ff716a;
+  --color-surface: #0d0e14;
+  --color-surface-container: #181921;
+  --color-surface-container-low: #12131a;
+  --color-surface-container-high: #1e1f28;
+  --color-surface-container-highest: #24252f;
+  --color-on-surface: #f4f2fd;
+  --color-on-surface-variant: #abaab4;
+  
+  --shadow-neon: 0 0 20px rgba(251, 209, 45, 0.3);
+  --shadow-neon-cyan: 0 0 20px rgba(0, 253, 193, 0.3);
+}
+
+@layer base {
+  body {
+    @apply bg-surface text-on-surface font-body overflow-hidden h-screen select-none selection:bg-primary selection:text-black;
+  }
+}
+
+@layer utilities {
+  .tech-grid-fine {
+    background-size: 10px 10px;
+    background-image: 
+      linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  }
+
+  .glow-border {
+    @apply border border-white/10 shadow-[0_0_15px_rgba(255,255,255,0.02)];
+  }
+
+  .etched-border {
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.02), 0 1px 1px rgba(0, 0, 0, 0.5);
+  }
+
+  .glass-panel {
+    @apply backdrop-blur-xl bg-black/60 border-white/10;
+  }
+  
+  .isometric-card {
+    transform: perspective(1000px) rotateX(10deg) rotateY(-10deg);
+    transition: transform 0.3s ease;
+  }
+  
+  .isometric-card:hover {
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1.02);
+  }
+
+  .neon-glow-primary {
+    box-shadow: 0 0 20px rgba(251, 209, 45, 0.2);
+  }
+
+  .neon-glow-secondary {
+    box-shadow: 0 0 20px rgba(0, 253, 193, 0.2);
+  }
+
+  .scanline {
+    width: 100%;
+    height: 100px;
+    z-index: 9999;
+    background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(255, 255, 255, 0.05) 50%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    opacity: 0.1;
+    position: absolute;
+    bottom: 100%;
+    animation: scanline 6s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes scanline {
+    0% { bottom: 100%; }
+    80% { bottom: 100%; }
+    100% { bottom: -100px; }
+  }
+
+  .cyber-grid {
+    background-size: 40px 40px;
+    background-image: 
+      linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  }
+
+  .text-glow {
+    text-shadow: 0 0 10px currentColor;
+  }
+
+  .crt-flicker {
+    animation: crt-flicker 0.15s infinite;
+  }
+
+  @keyframes crt-flicker {
+    0% { opacity: 0.99; }
+    50% { opacity: 0.98; }
+    100% { opacity: 0.99; }
+  }
+
+  .vignette {
+    box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.8);
+    pointer-events: none;
+  }
+
+  .noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.05;
+    pointer-events: none;
+  }
+
+  .cyber-button {
+    @apply relative overflow-hidden transition-all duration-300;
+  }
+
+  .cyber-button::before {
+    content: "";
+    @apply absolute inset-0 bg-white/10 -translate-x-full transition-transform duration-300 skew-x-12;
+  }
+
+  .cyber-button:hover::before {
+    @apply translate-x-full;
+  }
+
+  .etched-glass {
+    @apply bg-black/40 backdrop-blur-md border border-white/5 shadow-2xl;
+    background-image: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+  }
+
+  .chart-scan-container {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .chart-scanner-beam-primary {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 140px;
+    pointer-events: none;
+    z-index: 10;
+    background: linear-gradient(to right, transparent, rgba(251, 209, 45, 0.05) 40%, rgba(251, 209, 45, 0.2) 85%, rgba(251, 209, 45, 0.4) 100%);
+    border-right: 1.5px solid rgba(251, 209, 45, 0.55);
+    /* Fade the scanner seamlessly near the upper and lower charts boundary edges using a vertical linear gradient mask */
+    mask-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 1) 12%, rgba(0, 0, 0, 1) 88%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 1) 12%, rgba(0, 0, 0, 1) 88%, transparent);
+    animation: chart-scan-horizontal 6s infinite linear;
+  }
+
+  .chart-scanner-beam-secondary {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 140px;
+    pointer-events: none;
+    z-index: 10;
+    background: linear-gradient(to right, transparent, rgba(0, 253, 193, 0.05) 40%, rgba(0, 253, 193, 0.2) 85%, rgba(0, 253, 193, 0.4) 100%);
+    border-right: 1.5px solid rgba(0, 253, 193, 0.55);
+    /* Fade the scanner seamlessly near the upper and lower charts boundary edges using a vertical linear gradient mask */
+    mask-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 1) 12%, rgba(0, 0, 0, 1) 88%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 1) 12%, rgba(0, 0, 0, 1) 88%, transparent);
+    animation: chart-scan-horizontal 6s infinite linear;
+  }
+
+  @keyframes chart-scan-horizontal {
+    0% {
+      left: -140px;
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      left: 100%;
+      opacity: 0;
+    }
+  }
+
+  @keyframes ticker-scroll {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  .ticker-wrap {
+    width: 100%;
+    overflow: hidden;
+    background-color: rgba(3, 3, 4, 0.95);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+    box-sizing: border-box;
+  }
+
+  .ticker-content {
+    display: inline-flex;
+    white-space: nowrap;
+    animation: ticker-scroll 45s linear infinite;
+  }
+
+  .ticker-content:hover {
+    animation-play-state: paused;
+  }
+}
